@@ -1,0 +1,10 @@
+{% extends "main/header.html" %}
+
+{% block body %}
+    {% for video in videos %}
+        <h1><strong>{{video.title}}</strong></h1>
+        <hr>
+        <h3>{{video.description}}</h3>
+        {{video.embed|safe}}
+    {% endfor %}
+{% endblock %}
