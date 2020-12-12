@@ -22,4 +22,6 @@ app_name = "main"
 urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
     path("", views.home, name="home"),
+    path("register/", views.register, name="register"),
+    path("login/", views.loginRequest, name="login"),
 ]
