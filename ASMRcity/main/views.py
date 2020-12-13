@@ -21,10 +21,15 @@ def register(request):
         form = NewUserForm(request.POST)
         if form.is_valid():
             user = form.save()
+            messages.success(request=request, message="successfully registered!")
             #login the user after registration
             login(request, user)
+            username = form.cleaned_data.get("username")
+            messages.success(request=request, message=f"successfully logged in as {username}")
             #take em home
             return redirect("main:home")
+        else:
+            messages.error(request=request, message="error: invalid username, password, or email")
     form = NewUserForm()
     return render(request, "main/register.html", {"form":form})
 
@@ -42,11 +47,16 @@ def loginRequest(request):
                 login(request, user)
                 messages.success(request=request, message=f"successfully logged in as {username}")
                 return redirect("main:home")
+            else:
+                messages.error(request=request, message="error: invalid username or password")
+        else:
+            messages.error(request=request, message="error: invalid username or password")
             
     form = AuthenticationForm()
     return render(request, "main/login.html", {"form":form})
 
 def logoutRequest(request):
     logout(request)
-    redirect("main:home")
+    messages.info(request=request, message=f"successfully logged out.")
+    return redirect("main:home")
 # Create your views here.

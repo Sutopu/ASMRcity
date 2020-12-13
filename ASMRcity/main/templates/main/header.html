@@ -14,7 +14,12 @@
           <ul class="right hide-on-med-and-down">
               <li><a href="/">home</a></li>
               <li><a href="/register">register</a></li>
-              <li><a href="/login">login</a></li>
+              {% if user.is_authenticated %}
+                <li><a>{{user.username}}</a></li>
+              {% else %}
+                <li><a href="/login">login</a></li>
+              {% endif %}
+              <li><a href="/logout">logout</a></li>
           </ul>
         </div>
       </nav>
@@ -24,7 +29,7 @@
 
     {% if messages %}
       {% for message in messages %}
-        {{message}}
+        <script>M.toast({html:"{{message}}", displayLength:2000})</script>
       {% endfor %}
     {% endif %}
 </body>
