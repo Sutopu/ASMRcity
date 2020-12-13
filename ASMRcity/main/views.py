@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from .forms import NewUserForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib import messages
 
 def home(request):
     videos = AsmrVideo.objects.all()
@@ -39,6 +40,7 @@ def loginRequest(request):
             user = authenticate(request, username=username, password=password)
             if user != None:
                 login(request, user)
+                messages.success(request=request, message=f"successfully logged in as {username}")
                 return redirect("main:home")
             
     form = AuthenticationForm()
