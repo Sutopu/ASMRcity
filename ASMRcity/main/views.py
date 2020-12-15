@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import AsmrVideo
+from .models import AsmrVideo, AsmrCategory, AsmrCreator, UserVideoListEntry
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from .forms import NewUserForm
@@ -10,6 +10,8 @@ from django.contrib import messages
 def home(request):
     videos = AsmrVideo.objects.all()
     return render(request, "main/home.html", {"videos":videos})
+
+    
 
 
 def register(request):
@@ -60,3 +62,11 @@ def logoutRequest(request):
     messages.info(request=request, message=f"successfully logged out.")
     return redirect("main:home")
 # Create your views here.
+
+
+def myVideos(request):
+    userid = request.user.id
+    myList = UserVideoListEntry.objects.filter(user__id=userid)
+    myVideos = [AsmrVideo.objects.get(id=myList[i].video.id) for i in range(len(myList))]
+    print(myVideos)
+    return render(request, "main/myVideos.html", {"videos":myVideos})
