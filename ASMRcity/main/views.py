@@ -65,11 +65,16 @@ def logoutRequest(request):
 
 
 def myVideos(request):
-    if request.method == "POST":
-        pass
     userid = request.user.id
     #find all list entries that are associated with current user
     myList = UserVideoListEntry.objects.filter(user__id=userid)
     #find all videos that are associated with the current user
     myVideos = [AsmrVideo.objects.get(id=myList[i].video.id) for i in range(len(myList))]
     return render(request, "main/myVideos.html", {"videos":myVideos})
+
+def removeVideo(request, videoId):
+    #this feels very weird to do without a post request.
+    userid = request.user.id
+    listEntry = UserVideoListEntry.objects.get(user__id=userid, video__id=videoId)
+    listEntry.delete()
+    return redirect("main:myVideos")

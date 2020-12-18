@@ -6,12 +6,9 @@
         <p>{{video.description}}</p>
         <hr>
         {{video.embed|safe}}
-        <!--the action is the uri that points to the view that handles the request.-->
-        <form action="/myVideos/" method="POST">
-            
-            {% csrf_token %}
-            <button type="submit" data-="{{video.id}}">Remove From List</button>
-            
-        </form>
+        <!--the action is the uri that points to the view that handles the request.--> 
+        {% csrf_token %}
+        <a href="/removeVideo/{{video.id}}/"><button>Remove From List</button></a>
+        
     {% endfor %}
 {% endblock %}
