@@ -8,8 +8,12 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib import messages
 
 def home(request):
+    userid = request.user.id
     videos = AsmrVideo.objects.all()
-    return render(request, "main/home.html", {"videos":videos})
+    #list of UserVideoListEntries associated with current user.
+    userList = UserVideoListEntry.objects.filter(user__id=userid)
+    userVideoIds = [userList[i].video.id for i in range(len(userList))]
+    return render(request, "main/home.html", {"videos":videos, "userVideoIds":userVideoIds})
 
     
 
@@ -67,9 +71,9 @@ def logoutRequest(request):
 def myVideos(request):
     userid = request.user.id
     #find all list entries that are associated with current user
-    myList = UserVideoListEntry.objects.filter(user__id=userid)
+    userList = UserVideoListEntry.objects.filter(user__id=userid)
     #find all videos that are associated with the current user
-    myVideos = [AsmrVideo.objects.get(id=myList[i].video.id) for i in range(len(myList))]
+    myVideos = [AsmrVideo.objects.get(id=userList[i].video.id) for i in range(len(userList))]
     return render(request, "main/myVideos.html", {"videos":myVideos})
 
 def removeVideo(request, videoId):
@@ -78,3 +82,10 @@ def removeVideo(request, videoId):
     listEntry = UserVideoListEntry.objects.get(user__id=userid, video__id=videoId)
     listEntry.delete()
     return redirect("main:myVideos")
+
+def addVideo(request, videoId):
+    user = request.user
+    video = AsmrVideo.objects.get(id=videoId)
+    listEntry = UserVideoListEntry(user=user, video=video)
+    listEntry.save()
+    return redirect("main:home")

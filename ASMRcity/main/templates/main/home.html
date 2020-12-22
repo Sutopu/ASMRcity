@@ -6,5 +6,14 @@
         <p>{{video.description}}</p>
         <hr>
         {{video.embed|safe}}
+        {% if video.id in userVideoIds %}
+            <a href="/removeVideo/{{video.id}}/"><button>remove video</button></a>
+        {% else %}
+            <a href="/addVideo/{{video.id}}/"><button>add video</button></a>
+        {% endif %}
+    {% endfor %}
+
+    {% for id in userVideoIds %}
+        <h1><b>{{id}}</b></h1>
     {% endfor %}
 {% endblock %}

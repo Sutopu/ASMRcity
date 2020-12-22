@@ -27,4 +27,5 @@ urlpatterns = [
     path("logout/", views.logoutRequest, name="logout"),
     path("myVideos/", views.myVideos, name="myVideos"),
     path("removeVideo/<videoId>/", views.removeVideo, name="removeVideo"),
+    path("addVideo/<videoId>/", views.addVideo, name="addVideo")
 ]
