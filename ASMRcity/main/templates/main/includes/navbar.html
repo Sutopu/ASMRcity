@@ -2,6 +2,11 @@
     <div class="nav-wrapper">
       <a href="/" class="brand-logo center">ASMRcity</a>
       <ul class="right hide-on-med-and-down">
+          <li>
+            <form>
+              <input type="text">
+            </form>
+          </li>
           <li><a href="/">Home</a></li>
           {% if user.is_authenticated %}
             <li><a>{{user.username}}</a></li>

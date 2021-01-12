@@ -1,0 +1,18 @@
+The purpose of this project is to gain more familiarity with the Django 
+backend web framework.
+
+This project is a website developed using the backend web framework django.
+The project is composed of a web application that provides the following
+functionality to the user:
+-   User can register an account, login, and logout
+-   User can see all videos posted to website on the homepage
+-   If the user is logged in, then they can have a list of videos
+-   The user can add videos that are not in their list to their list and
+    remove videos that are in their list from their list.
+
+to run a development server:
+    python3 manage.py runserver
+
+to access development website:
+    open a web browser and put in the url: 
+    localhost:8000
